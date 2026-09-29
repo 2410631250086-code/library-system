@@ -9,4 +9,4 @@
             <li>{{ $category }}</li>
         @endforeach
     </ul>
-endsection
+@endsection

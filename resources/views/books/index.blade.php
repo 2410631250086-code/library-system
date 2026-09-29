@@ -7,17 +7,21 @@
     <table border="1" cellpadding="10" cellspacing="0">
         <thead>
             <tr>
-                <th>Judul</th>
-                <th>Penulis</th>
-                <th>Tahun Terbit</th>
+                <th>id</th>
+                <th>judul</th>
+                <th>penulis</th>
+                <th>tahun terbit</th>
+                <th>stok</th>
             </tr>
         </thead>
         <tbody>
             @foreach($books as $book)
                 <tr>
-                    <td>{{ $book['title'] }}</td>
-                    <td>{{ $book['author'] }}</td>
-                    <td>{{ $book['year'] }}</td>
+                    <td>{{ $book->id }}</td>
+                    <td>{{ $book->judul }}</td>
+                    <td>{{ $book->penulis }}</td>
+                    <td>{{ $book->tahun_terbit }}</td>
+                    <td>{{ $book->stok }}</td>
                 </tr>
             @endforeach
         </tbody>
