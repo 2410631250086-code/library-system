@@ -9,7 +9,7 @@ class Book extends Model
     protected $fillable = [
         'judul',
         'penulis',
-        'tahun terbit',
+        'tahun_terbit',
         'stok',
     ];
 }
