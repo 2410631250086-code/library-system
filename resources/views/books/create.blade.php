@@ -11,33 +11,48 @@
 
 <div style="margin-bottom: 15px;" >
     <label style="display: block; margin-bottom: 5px; font-weight: bold;">Judul Buku</label>
-    <input type="text" name="title" value="{{ old('title') }}">
-    @error('title')
+    <input type="text" name="judul" value="{{ old('judul') }}">
+    @error('judul')
         <p style="color: red;">{{ $message }}</p>
     @enderror
 </div>
 
 <div style="margin-bottom: 15px;">
     <label style="display: block; margin-bottom: 5px; font-weight: bold;">Penulis</label>
-    <input type="text" name="author" value="{{ old('author') }}">
-    @error('author')
+    <input type="text" name="penulis" value="{{ old('penulis') }}">
+    @error('penulis')
         <p style="color: red,">{{ $message }}</p>
     @enderror
 </div>
 
 <div style="margin-bottom: 15px;">
     <label style="display: block; margin-bottom: 5px; font-weight: bold;">Tahun Terbit</label>
-    <input type="text" name="year" value="{{ old('year') }}">
-    @error('year')
+    <input type="text" name="tahun_terbit" value="{{ old('tahun_terbit') }}">
+    @error('tahun_terbit')
         <p style="color: red,">{{ $message }}</p>
     @enderror
 </div>
 
 <div style="margin-bottom: 15px;">
     <label style="display: block; margin-bottom: 5px; font-weight: bold;">Stok</label>
-    <input type="text" name="stock" value="{{ old('stock') }}">
-    @error('stock')
+    <input type="text" name="stok" value="{{ old('stok') }}">
+    @error('stok')
     <p style="color: red,">{{ $message }}</p>
+    @enderror
+</div>
+
+<div class="mb-3">
+    <label for="category_id" class="form-label">Kategori Buku</label>
+    <select name="category_id" id="category_id" class="form-control" required>
+        <option value="">-- Pilih Kategori --</option>
+        @foreach($categories as $category)
+            <option value="{{ $category->id }}" {{ (isset($book) && $book->category_id == $category->id) ? 'selected' : '' }}>
+                {{ $category->name }}
+            </option>
+        @endforeach
+    </select>
+    @error('category_id')
+        <div class="text-danger">{{ $message }}</div>
     @enderror
 </div>
 

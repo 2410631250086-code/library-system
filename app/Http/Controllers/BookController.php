@@ -3,67 +3,58 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Models\Book;
+use App\Models\Category;
 
 class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::all();
-
-        return view('books.index', compact('books'));
+        $books = Book::with('category')->get();
+        return view ('books.index', compact('books'));
     }
 
     public function create()
     {
-        return view('books.create');
+        $categories = Category::all();
+        return view('books.create', compact('categories'));
     }
 
 
 public function store(Request $request)
 {
     $validated = $request->validate([
-        'title' => 'required|string|max:255',
-        'author' => 'required|string|max:255',
-        'year' => 'required|integer|min:1900',
-        'stock' => 'required|integer|min:0',
+        'judul' => 'required|string|max:255',
+        'penulis' => 'required|string|max:255',
+        'tahun_terbit' => 'required|integer|min:1900',
+        'stok' => 'required|integer|min:0',
+        'category_id' => 'required|exists:categories,id',
  ]);
 
- Book::create([
-    'judul' => $validated['title'],
-    'penulis' => $validated['author'],
-    'tahun_terbit' => $validated['year'],
-    'stok' => $validated['stock'],
- ]);
-
+ Book::create($validated);
  return redirect()
-            ->route('books.index')
-            ->with('success', 'Data buku berhasil ditambahkan.');
+    ->route('books.index')
+    ->with('success', 'Data buku berhasil ditambahkan.');
 
 }
 
  public function edit(Book $book)
  {
-    return view('books.edit', compact('book'));
+    $categories = \App\Models\Category::all();
+    return view('books.edit', compact('book', 'categories'));
  }
 
  public function update(Request $request, Book $book)
  {
     $validated = $request->validate([
-        'title' => 'required|string|max:255',
-        'author' => 'required|string|max:255',
-        'year' => 'required|integer|min:1900',
-        'stock' => 'required|integer|min:0',
-        ]);
-
-    $book->update([
-        'judul'  => $validated['title'],
-        'penulis' => $validated['author'],
-        'tahun_terbit' => $validated['year'],
-        'stok' => $validated['stock'],
+        'judul' => 'required|string|max:255',
+        'penulis' => 'required|string|max:255',
+        'tahun_terbit' => 'required|integer|min:1900',
+        'stok' => 'required|integer|min:0',
+        'category_id' => 'required|exists:categories,id',
     ]);
 
+        $book->update($validated);
         return redirect()
             ->route('books.index')
             ->with('success', 'Data Buku Berhasil Diperbaharui.');   

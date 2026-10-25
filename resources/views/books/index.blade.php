@@ -19,11 +19,11 @@
         <thead>
             <tr>
                 <th>id</th>
-                <th>judul</th>
+                <th>Judul Buku</th>
                 <th>penulis</th>
                 <th>tahun terbit</th>
                 <th>stok</th>
-                <th>aksi</th>
+                <th>kategori</th>
             </tr>
         </thead>
         <tbody>
@@ -34,19 +34,21 @@
                     <td>{{ $book->penulis }}</td>
                     <td>{{ $book->tahun_terbit }}</td>
                     <td>{{ $book->stok }}</td>
+                    <td>{{ $book->category->name ?? 'Tanpa Kategori' }}</td>
                     <td>
+                        <!-- Tombol Edit/Dalate -->
                         <a href="{{ route('books.edit', $book->id) }}">Edit</a>
 
-                        <form action="{{ route('books.destroy', $book->id) }}" method="POST" style="display:inline:">
-                            @csrf 
+                        <form action="{{ route('books.destroy', $book->id) }}" method="POST" style="display:inline;">
+                            @csrf
                             @method('DELETE')
-                            <button type="submit" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
+                            <button type="submit" onclick="return confirm('yakin ingin menghapus data ini?')">Hapus</button>
                         </form>
+                    </td>
                 </tr>
-            @endforeach
+                @endforeach
         </tbody>
     </table>
-@endsection
 
 
                 
