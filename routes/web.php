@@ -6,6 +6,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 
 Route::middleware('guest')->group(function() {
     Route::get('/login', [AuthController::class, 'showLogin'])
@@ -18,11 +19,20 @@ Route::post('logout', [AuthController::class, 'logout'])
         ->middleware('auth')
         ->name('logout');
 
-        Route::middleware('auth')->group(function () {
-            Route::get('/categories', [CategoryController::class, 'index']);
-            Route::get('/members', [MemberController::class, 'index']);
-            Route::get('/dashboard', [DashboardController::class, 'index']);
-            Route::resource('books', BookController::class);
+Route::middleware('auth')->group(function () {
+    Route::get('/categories', [CategoryController::class, 'index']);
+    Route::get('/members', [MemberController::class, 'index']);
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::resource('books', BookController::class);
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('books', BookController::class);
+});
+
+Route::middleware(['auth', 'can:manage-users'])->group(function () {
+    Route::resource('users', UserController::class);
+});
+
 });
 
 Route::get('/', function () {
